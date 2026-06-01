@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BookingController;
 use App\Http\Controllers\Api\V1\CalendarController;
+use App\Http\Controllers\Api\V1\FileManagerController;
 use App\Http\Controllers\Api\V1\InterviewCategoryController;
 use App\Http\Controllers\Api\V1\InterviewSlotController;
 use App\Http\Controllers\Api\V1\TutorAvailabilityController;
@@ -97,6 +98,12 @@ Route::prefix('v1')->group(function (): void {
         Route::get('/calendar/views/monthly', [CalendarController::class, 'monthlyView']);
         Route::get('/calendar/views/weekly', [CalendarController::class, 'weeklyView']);
         Route::get('/calendar/views/daily', [CalendarController::class, 'dailyView']);
+
+        Route::post('/files', [FileManagerController::class, 'store']);
+        Route::get('/files', [FileManagerController::class, 'index']);
+        Route::post('/files/batch', [FileManagerController::class, 'batchStore']);
+        Route::get('/files/{id}', [FileManagerController::class, 'show']);
+        Route::delete('/files/{id}', [FileManagerController::class, 'destroy']);
 
         Route::prefix('admin')->group(function (): void {
             Route::get('/users', [UserManagementController::class, 'index']);

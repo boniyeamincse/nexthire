@@ -98,4 +98,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(CalendarEvent::class, 'owner_user_id');
     }
+
+    public function files(): HasMany
+    {
+        return $this->hasMany(StoredFile::class, 'owner_user_id');
+    }
 }
