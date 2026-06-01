@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\InterviewCategoryController;
+use App\Http\Controllers\Api\V1\InterviewSlotController;
 use App\Http\Controllers\Api\V1\TutorAvailabilityController;
 use App\Http\Controllers\Api\V1\TutorManagementController;
 use App\Http\Controllers\Api\V1\Admin\TutorModerationController;
@@ -40,6 +41,10 @@ Route::prefix('v1')->group(function (): void {
     Route::get('/tutors/{id}/reviews', [TutorManagementController::class, 'tutorReviews']);
     Route::get('/categories', [InterviewCategoryController::class, 'index']);
     Route::get('/categories/{id}', [InterviewCategoryController::class, 'show']);
+    Route::get('/slots', [InterviewSlotController::class, 'index']);
+    Route::get('/slots/available', [InterviewSlotController::class, 'available']);
+    Route::get('/slots/search', [InterviewSlotController::class, 'search']);
+    Route::get('/slots/{id}', [InterviewSlotController::class, 'show']);
 
     Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('/users/me', [AuthController::class, 'me']);
@@ -64,6 +69,12 @@ Route::prefix('v1')->group(function (): void {
         Route::put('/categories/{id}', [InterviewCategoryController::class, 'update']);
         Route::delete('/categories/{id}', [InterviewCategoryController::class, 'destroy']);
         Route::patch('/categories/{id}/status', [InterviewCategoryController::class, 'updateStatus']);
+
+        Route::post('/slots', [InterviewSlotController::class, 'store']);
+        Route::put('/slots/{id}', [InterviewSlotController::class, 'update']);
+        Route::delete('/slots/{id}', [InterviewSlotController::class, 'destroy']);
+        Route::patch('/slots/{id}/publish', [InterviewSlotController::class, 'publish']);
+        Route::patch('/slots/{id}/cancel', [InterviewSlotController::class, 'cancel']);
 
         Route::prefix('admin')->group(function (): void {
             Route::get('/users', [UserManagementController::class, 'index']);

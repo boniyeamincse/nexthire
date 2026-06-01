@@ -78,4 +78,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(TutorUnavailableDate::class);
     }
+
+    public function interviewSlots(): HasMany
+    {
+        return $this->hasMany(InterviewSlot::class, 'tutor_user_id');
+    }
 }
