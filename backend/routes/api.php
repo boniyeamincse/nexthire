@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\InterviewCategoryController;
 use App\Http\Controllers\Api\V1\TutorAvailabilityController;
 use App\Http\Controllers\Api\V1\TutorManagementController;
 use App\Http\Controllers\Api\V1\Admin\TutorModerationController;
@@ -37,6 +38,8 @@ Route::prefix('v1')->group(function (): void {
     Route::get('/tutors/{id}', [TutorManagementController::class, 'show']);
     Route::get('/tutors/{id}/slots', [TutorManagementController::class, 'tutorSlots']);
     Route::get('/tutors/{id}/reviews', [TutorManagementController::class, 'tutorReviews']);
+    Route::get('/categories', [InterviewCategoryController::class, 'index']);
+    Route::get('/categories/{id}', [InterviewCategoryController::class, 'show']);
 
     Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('/users/me', [AuthController::class, 'me']);
@@ -56,6 +59,11 @@ Route::prefix('v1')->group(function (): void {
         Route::post('/tutors/me/unavailable-dates', [TutorAvailabilityController::class, 'storeUnavailableDate']);
         Route::get('/tutors/me/unavailable-dates', [TutorAvailabilityController::class, 'listUnavailableDates']);
         Route::delete('/tutors/me/unavailable-dates/{id}', [TutorAvailabilityController::class, 'deleteUnavailableDate']);
+
+        Route::post('/categories', [InterviewCategoryController::class, 'store']);
+        Route::put('/categories/{id}', [InterviewCategoryController::class, 'update']);
+        Route::delete('/categories/{id}', [InterviewCategoryController::class, 'destroy']);
+        Route::patch('/categories/{id}/status', [InterviewCategoryController::class, 'updateStatus']);
 
         Route::prefix('admin')->group(function (): void {
             Route::get('/users', [UserManagementController::class, 'index']);
