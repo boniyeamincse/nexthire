@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\BookingController;
 use App\Http\Controllers\Api\V1\InterviewCategoryController;
 use App\Http\Controllers\Api\V1\InterviewSlotController;
 use App\Http\Controllers\Api\V1\TutorAvailabilityController;
@@ -75,6 +76,17 @@ Route::prefix('v1')->group(function (): void {
         Route::delete('/slots/{id}', [InterviewSlotController::class, 'destroy']);
         Route::patch('/slots/{id}/publish', [InterviewSlotController::class, 'publish']);
         Route::patch('/slots/{id}/cancel', [InterviewSlotController::class, 'cancel']);
+
+        Route::post('/bookings', [BookingController::class, 'store']);
+        Route::get('/bookings', [BookingController::class, 'index']);
+        Route::get('/bookings/upcoming', [BookingController::class, 'upcoming']);
+        Route::get('/bookings/completed', [BookingController::class, 'completed']);
+        Route::get('/bookings/cancelled', [BookingController::class, 'cancelled']);
+        Route::get('/bookings/{id}', [BookingController::class, 'show']);
+        Route::patch('/bookings/{id}/cancel', [BookingController::class, 'cancel']);
+        Route::patch('/bookings/{id}/reschedule', [BookingController::class, 'reschedule']);
+        Route::patch('/bookings/{id}/confirm', [BookingController::class, 'confirm']);
+        Route::patch('/bookings/{id}/complete', [BookingController::class, 'complete']);
 
         Route::prefix('admin')->group(function (): void {
             Route::get('/users', [UserManagementController::class, 'index']);

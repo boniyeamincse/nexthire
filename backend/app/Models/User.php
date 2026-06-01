@@ -83,4 +83,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(InterviewSlot::class, 'tutor_user_id');
     }
+
+    public function bookingsAsStudent(): HasMany
+    {
+        return $this->hasMany(Booking::class, 'student_user_id');
+    }
+
+    public function bookingsAsTutor(): HasMany
+    {
+        return $this->hasMany(Booking::class, 'tutor_user_id');
+    }
 }
