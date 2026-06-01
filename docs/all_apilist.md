@@ -16,7 +16,7 @@
 
 ### Purpose
 
-User registration, login, logout, email verification, password reset, MFA, and profile access.
+User registration, login, logout, email verification, password reset, MFA, session management, and profile access.
 
 ### APIs
 
@@ -28,7 +28,14 @@ POST   /api/v1/auth/refresh-token
 POST   /api/v1/auth/forgot-password
 POST   /api/v1/auth/reset-password
 POST   /api/v1/auth/verify-email
+POST   /api/v1/auth/resend-verification
+POST   /api/v1/auth/change-password
+POST   /api/v1/auth/social-login
+POST   /api/v1/auth/mfa/setup
 POST   /api/v1/auth/mfa/verify
+POST   /api/v1/auth/mfa/disable
+GET    /api/v1/auth/sessions
+DELETE /api/v1/auth/sessions/{id}
 GET    /api/v1/users/me
 PATCH  /api/v1/users/me
 ```

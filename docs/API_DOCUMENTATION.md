@@ -10,7 +10,7 @@
 
 ## 2. Authentication
 
-Bearer token authentication is recommended for client requests. Privileged actions should require MFA-backed sessions where applicable.
+Bearer token authentication is recommended for client requests. Privileged actions should require MFA-backed sessions where applicable. Access tokens should be short-lived, refresh tokens should rotate, and authenticated users should be able to manage active sessions.
 
 ## 3. Endpoint Catalog
 
@@ -18,7 +18,7 @@ The exhaustive module-wise catalog is maintained in [all_apilist.md](all_apilist
 
 | Resource Family | Representative Endpoints |
 | --- | --- |
-| Auth | `POST /api/v1/auth/register`, `POST /api/v1/auth/login`, `POST /api/v1/auth/mfa/verify` |
+| Auth | `POST /api/v1/auth/register`, `POST /api/v1/auth/login`, `POST /api/v1/auth/refresh-token`, `POST /api/v1/auth/mfa/setup`, `POST /api/v1/auth/mfa/verify` |
 | Users | `GET /api/v1/users/me`, `PATCH /api/v1/users/me` |
 | Admin Users | `GET /api/v1/admin/users`, `GET /api/v1/admin/users/{id}` |
 | Tutors | `GET /api/v1/tutors`, `GET /api/v1/tutors/{id}`, `PATCH /api/v1/tutors/me/profile` |
