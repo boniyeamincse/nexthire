@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\TutorAvailabilityController;
 use App\Http\Controllers\Api\V1\TutorManagementController;
 use App\Http\Controllers\Api\V1\Admin\TutorModerationController;
 use App\Http\Controllers\Api\V1\Admin\UserManagementController;
@@ -46,6 +47,15 @@ Route::prefix('v1')->group(function (): void {
         Route::post('/tutors/me/verification-documents', [TutorManagementController::class, 'storeVerificationDocument']);
         Route::get('/tutors/me/earnings', [TutorManagementController::class, 'myEarnings']);
         Route::get('/tutors/me/reviews', [TutorManagementController::class, 'myReviews']);
+
+        Route::post('/tutors/me/availability-rules', [TutorAvailabilityController::class, 'storeAvailabilityRule']);
+        Route::get('/tutors/me/availability-rules', [TutorAvailabilityController::class, 'listAvailabilityRules']);
+        Route::get('/tutors/me/availability-rules/{id}', [TutorAvailabilityController::class, 'showAvailabilityRule']);
+        Route::put('/tutors/me/availability-rules/{id}', [TutorAvailabilityController::class, 'updateAvailabilityRule']);
+        Route::delete('/tutors/me/availability-rules/{id}', [TutorAvailabilityController::class, 'deleteAvailabilityRule']);
+        Route::post('/tutors/me/unavailable-dates', [TutorAvailabilityController::class, 'storeUnavailableDate']);
+        Route::get('/tutors/me/unavailable-dates', [TutorAvailabilityController::class, 'listUnavailableDates']);
+        Route::delete('/tutors/me/unavailable-dates/{id}', [TutorAvailabilityController::class, 'deleteUnavailableDate']);
 
         Route::prefix('admin')->group(function (): void {
             Route::get('/users', [UserManagementController::class, 'index']);

@@ -68,4 +68,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(TutorVerificationDocument::class);
     }
+
+    public function tutorAvailabilityRules(): HasMany
+    {
+        return $this->hasMany(TutorAvailabilityRule::class);
+    }
+
+    public function tutorUnavailableDates(): HasMany
+    {
+        return $this->hasMany(TutorUnavailableDate::class);
+    }
 }
