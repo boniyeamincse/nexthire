@@ -1,0 +1,253 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap');
+
+:root {
+  color-scheme: light;
+  --bg: #0b1020;
+  --bg-soft: #11182d;
+  --surface: rgba(255, 255, 255, 0.08);
+  --surface-strong: rgba(255, 255, 255, 0.12);
+  --text: #f5f7ff;
+  --muted: rgba(245, 247, 255, 0.72);
+  --accent: #7dd3fc;
+  --accent-strong: #38bdf8;
+  --border: rgba(255, 255, 255, 0.12);
+  --shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  font-family: 'Manrope', sans-serif;
+  background:
+    radial-gradient(circle at top left, rgba(56, 189, 248, 0.26), transparent 32%),
+    radial-gradient(circle at top right, rgba(16, 185, 129, 0.14), transparent 28%),
+    linear-gradient(180deg, #07111f 0%, #0b1020 100%);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 36px 36px;
+  mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.9), transparent 90%);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.app-shell {
+  width: min(1180px, calc(100% - 32px));
+  margin: 0 auto;
+  padding: 24px 0 40px;
+}
+
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 24px;
+  padding: 18px 0 28px;
+}
+
+.topbar h1,
+.section-heading h2,
+.hero h2 {
+  margin: 0;
+  line-height: 1.02;
+}
+
+.topbar h1 {
+  font-size: clamp(1.6rem, 2vw, 2.1rem);
+}
+
+.topbar-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.topbar-nav a,
+.button {
+  border: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 14px;
+  border-radius: 999px;
+  color: var(--text);
+}
+
+.hero,
+.section,
+.footer {
+  position: relative;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.08), rgba(255, 255, 255, 0.04));
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(16px);
+}
+
+.hero {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 24px;
+  padding: 32px;
+  border-radius: 28px;
+}
+
+.hero-copy p,
+.section-heading p,
+.feature-card p,
+.workflow-card p,
+.footer p {
+  color: var(--muted);
+  line-height: 1.65;
+}
+
+.hero h2 {
+  font-size: clamp(2.4rem, 5vw, 4.8rem);
+  max-width: 12ch;
+}
+
+.hero-copy p {
+  max-width: 62ch;
+}
+
+.hero-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+
+.button-primary {
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  color: #04111a;
+  font-weight: 800;
+}
+
+.button-secondary {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.hero-panel {
+  display: grid;
+  gap: 14px;
+  align-content: center;
+}
+
+.panel-card,
+.feature-card,
+.workflow-card {
+  border-radius: 22px;
+  border: 1px solid var(--border);
+  background: rgba(8, 13, 24, 0.42);
+  padding: 18px;
+}
+
+.panel-card span,
+.workflow-step,
+.eyebrow {
+  display: inline-flex;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  font-size: 0.72rem;
+  color: var(--accent);
+}
+
+.panel-card strong {
+  display: block;
+  margin-top: 10px;
+  font-size: 1.1rem;
+}
+
+.section {
+  margin-top: 22px;
+  padding: 28px;
+  border-radius: 26px;
+}
+
+.section-alt {
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+}
+
+.section-heading {
+  max-width: 720px;
+  margin-bottom: 22px;
+}
+
+.section-heading h2 {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  margin-top: 8px;
+}
+
+.feature-grid,
+.workflow-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.feature-card h3,
+.workflow-card h3 {
+  margin: 0 0 8px;
+}
+
+.workflow-card {
+  min-height: 180px;
+}
+
+.footer {
+  margin-top: 22px;
+  padding: 22px 28px;
+  border-radius: 24px;
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 960px) {
+  .hero,
+  .feature-grid,
+  .workflow-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .topbar {
+    flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .app-shell {
+    width: min(100% - 20px, 1180px);
+  }
+
+  .hero,
+  .section,
+  .footer {
+    padding: 20px;
+    border-radius: 20px;
+  }
+
+  .hero h2 {
+    max-width: none;
+  }
+}
