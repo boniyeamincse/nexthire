@@ -44,6 +44,7 @@ Route::prefix('v1')->group(function (): void {
             Route::patch('/users/{id}/status', [UserManagementController::class, 'updateStatus']);
             Route::post('/users/{id}/suspend', [UserManagementController::class, 'suspend']);
             Route::post('/users/{id}/ban', [UserManagementController::class, 'ban']);
+            Route::post('/users/{id}/restore', [UserManagementController::class, 'restore']);
             Route::get('/users/{id}/activity-logs', [UserManagementController::class, 'activityLogs']);
             Route::get('/users/{id}/login-history', [UserManagementController::class, 'loginHistory']);
         });

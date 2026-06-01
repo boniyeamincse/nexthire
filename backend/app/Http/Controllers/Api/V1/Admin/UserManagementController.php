@@ -203,6 +203,13 @@ class UserManagementController extends Controller
         return $this->updateStatus($request, $id);
     }
 
+    public function restore(Request $request, int $id): JsonResponse
+    {
+        $request->merge(['status' => 'active']);
+
+        return $this->updateStatus($request, $id);
+    }
+
     public function activityLogs(Request $request, int $id): JsonResponse
     {
         $admin = $this->authorizeAdmin($request);
