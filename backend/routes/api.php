@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\Admin\UserManagementController;
+use Illuminate\Support\Facades\Route;
 
 Route::prefix('v1')->group(function (): void {
     Route::get('/health', function () {
@@ -32,5 +33,19 @@ Route::prefix('v1')->group(function (): void {
     Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('/users/me', [AuthController::class, 'me']);
         Route::patch('/users/me', [AuthController::class, 'updateMe']);
+
+        Route::prefix('admin')->group(function (): void {
+            Route::get('/users', [UserManagementController::class, 'index']);
+            Route::get('/users/{id}', [UserManagementController::class, 'show']);
+            Route::post('/users', [UserManagementController::class, 'store']);
+            Route::patch('/users/{id}', [UserManagementController::class, 'update']);
+            Route::delete('/users/{id}', [UserManagementController::class, 'destroy']);
+            Route::get('/roles', [UserManagementController::class, 'roles']);
+            Route::patch('/users/{id}/status', [UserManagementController::class, 'updateStatus']);
+            Route::post('/users/{id}/suspend', [UserManagementController::class, 'suspend']);
+            Route::post('/users/{id}/ban', [UserManagementController::class, 'ban']);
+            Route::get('/users/{id}/activity-logs', [UserManagementController::class, 'activityLogs']);
+            Route::get('/users/{id}/login-history', [UserManagementController::class, 'loginHistory']);
+        });
     });
 });
