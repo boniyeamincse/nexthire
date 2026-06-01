@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\TutorManagementController;
+use App\Http\Controllers\Api\V1\Admin\TutorModerationController;
 use App\Http\Controllers\Api\V1\Admin\UserManagementController;
 use Illuminate\Support\Facades\Route;
 
@@ -30,9 +32,20 @@ Route::prefix('v1')->group(function (): void {
         Route::delete('/sessions/{id}', [AuthController::class, 'destroySession'])->middleware('auth:sanctum');
     });
 
+    Route::get('/tutors', [TutorManagementController::class, 'index']);
+    Route::get('/tutors/{id}', [TutorManagementController::class, 'show']);
+    Route::get('/tutors/{id}/slots', [TutorManagementController::class, 'tutorSlots']);
+    Route::get('/tutors/{id}/reviews', [TutorManagementController::class, 'tutorReviews']);
+
     Route::middleware('auth:sanctum')->group(function (): void {
         Route::get('/users/me', [AuthController::class, 'me']);
         Route::patch('/users/me', [AuthController::class, 'updateMe']);
+
+        Route::post('/tutor-applications', [TutorManagementController::class, 'apply']);
+        Route::patch('/tutors/me/profile', [TutorManagementController::class, 'updateMyProfile']);
+        Route::post('/tutors/me/verification-documents', [TutorManagementController::class, 'storeVerificationDocument']);
+        Route::get('/tutors/me/earnings', [TutorManagementController::class, 'myEarnings']);
+        Route::get('/tutors/me/reviews', [TutorManagementController::class, 'myReviews']);
 
         Route::prefix('admin')->group(function (): void {
             Route::get('/users', [UserManagementController::class, 'index']);
@@ -47,6 +60,11 @@ Route::prefix('v1')->group(function (): void {
             Route::post('/users/{id}/restore', [UserManagementController::class, 'restore']);
             Route::get('/users/{id}/activity-logs', [UserManagementController::class, 'activityLogs']);
             Route::get('/users/{id}/login-history', [UserManagementController::class, 'loginHistory']);
+
+            Route::post('/tutors/{id}/approve', [TutorModerationController::class, 'approve']);
+            Route::post('/tutors/{id}/reject', [TutorModerationController::class, 'reject']);
+            Route::post('/tutors/{id}/suspend', [TutorModerationController::class, 'suspend']);
+            Route::post('/tutors/{id}/verify', [TutorModerationController::class, 'verify']);
         });
     });
 });

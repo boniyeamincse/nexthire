@@ -5,6 +5,8 @@ namespace App\Models;
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -50,5 +52,20 @@ class User extends Authenticatable
             'password' => 'hashed',
             'mfa_enabled' => 'boolean',
         ];
+    }
+
+    public function tutorProfile(): HasOne
+    {
+        return $this->hasOne(TutorProfile::class);
+    }
+
+    public function tutorApplications(): HasMany
+    {
+        return $this->hasMany(TutorApplication::class);
+    }
+
+    public function tutorVerificationDocuments(): HasMany
+    {
+        return $this->hasMany(TutorVerificationDocument::class);
     }
 }
