@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 export default function LoginPage() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [form, setForm] = useState({ email: '', password: '', remember: false });
   const [errors, setErrors] = useState({});
   const [loading, setLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
 
   const validate = () => {
     const e = {};
@@ -28,10 +31,15 @@ export default function LoginPage() {
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setLoading(true);
-    // Simulate API call
-    await new Promise(r => setTimeout(r, 1500));
-    setLoading(false);
-    navigate('/');
+    try {
+      const result = await login({ email: form.email, password: form.password });
+      const dashboardPath = result?.user?.role === 'tutor' ? '/tutor/dashboard' : '/student/dashboard';
+      navigate(dashboardPath);
+    } catch (err) {
+      setErrors({ email: err.response?.data?.message || 'Login failed. Please check your credentials.' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (

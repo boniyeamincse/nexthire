@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
 const ROLES = [
   { id: 'student',      label: 'Student',      icon: '🎓', desc: 'Practice & book sessions' },
@@ -9,6 +10,7 @@ const ROLES = [
 
 export default function RegisterPage() {
   const navigate = useNavigate();
+  const { register } = useAuth();
   const [step, setStep]     = useState(1); // 1 = role, 2 = details
   const [role, setRole]     = useState('');
   const [showPwd, setShowPwd] = useState(false);
@@ -42,9 +44,25 @@ export default function RegisterPage() {
     const errs = validate();
     if (Object.keys(errs).length) { setErrors(errs); return; }
     setLoading(true);
-    await new Promise(r => setTimeout(r, 1600));
-    setLoading(false);
-    navigate('/login');
+    try {
+      const result = await register({
+        name: form.name,
+        email: form.email,
+        password: form.password,
+        password_confirmation: form.confirmPassword,
+        role: role
+      });
+      const dashboardPath = result?.user?.role === 'tutor' ? '/tutor/dashboard' : '/student/dashboard';
+      navigate(dashboardPath);
+    } catch (err) {
+      if (err.response?.data?.errors) {
+        setErrors(err.response.data.errors);
+      } else {
+        setErrors({ email: err.response?.data?.message || 'Registration failed.' });
+      }
+    } finally {
+      setLoading(false);
+    }
   };
 
   /* Password strength */
