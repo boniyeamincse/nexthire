@@ -5,13 +5,37 @@ import LoginPage           from './pages/LoginPage';
 import RegisterPage        from './pages/RegisterPage';
 import ForgotPasswordPage  from './pages/ForgotPasswordPage';
 import TutorApplyPage      from './pages/TutorApplyPage';
-import StudentDashboard    from './pages/StudentDashboard';
+import StudentProfilePage  from './pages/StudentProfilePage';
+import SearchTutorsPage    from './pages/SearchTutorsPage';
+import TutorProfilePage    from './pages/TutorProfilePage';
+import CheckoutPage        from './pages/CheckoutPage';
 import TutorDashboard      from './pages/TutorDashboard';
 
 const ProtectedRoute = ({ children }) => {
   const { isAuthenticated, loading } = useAuth();
   if (loading) return <div>Loading...</div>;
   if (!isAuthenticated) return <Navigate to="/login" replace />;
+  return children;
+};
+
+const RoleProtectedRoute = ({ allowedRoles, children }) => {
+  const { isAuthenticated, loading, user } = useAuth();
+
+  if (loading) return <div>Loading...</div>;
+  if (!isAuthenticated) return <Navigate to="/login" replace />;
+
+  if (allowedRoles.length > 0 && !allowedRoles.includes(user?.role)) {
+    if (user?.role === 'tutor') {
+      return <Navigate to="/tutor/dashboard" replace />;
+    }
+
+    if (user?.role === 'student') {
+      return <Navigate to="/student/profile" replace />;
+    }
+
+    return <Navigate to="/" replace />;
+  }
+
   return children;
 };
 
@@ -25,8 +49,11 @@ export default function App() {
           <Route path="/register"         element={<RegisterPage />} />
           <Route path="/forgot-password"  element={<ForgotPasswordPage />} />
           <Route path="/tutor-apply"      element={<TutorApplyPage />} />
-          <Route path="/student/dashboard" element={<ProtectedRoute><StudentDashboard /></ProtectedRoute>} />
-          <Route path="/tutor/dashboard" element={<ProtectedRoute><TutorDashboard /></ProtectedRoute>} />
+          <Route path="/tutors"           element={<SearchTutorsPage />} />
+          <Route path="/tutors/:id"       element={<TutorProfilePage />} />
+          <Route path="/checkout/:slotId" element={<ProtectedRoute><CheckoutPage /></ProtectedRoute>} />
+          <Route path="/student/profile" element={<RoleProtectedRoute allowedRoles={['student']}><StudentProfilePage /></RoleProtectedRoute>} />
+          <Route path="/tutor/dashboard" element={<RoleProtectedRoute allowedRoles={['tutor']}><TutorDashboard /></RoleProtectedRoute>} />
           {/* Additional routes will be added here */}
         </Routes>
       </BrowserRouter>

@@ -33,7 +33,7 @@ export default function LoginPage() {
     setLoading(true);
     try {
       const result = await login({ email: form.email, password: form.password });
-      const dashboardPath = result?.user?.role === 'tutor' ? '/tutor/dashboard' : '/student/dashboard';
+      const dashboardPath = result?.user?.role === 'tutor' ? '/tutor/dashboard' : '/student/profile';
       navigate(dashboardPath);
     } catch (err) {
       setErrors({ email: err.response?.data?.message || 'Login failed. Please check your credentials.' });

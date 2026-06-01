@@ -52,7 +52,7 @@ export default function RegisterPage() {
         password_confirmation: form.confirmPassword,
         role: role
       });
-      const dashboardPath = result?.user?.role === 'tutor' ? '/tutor/dashboard' : '/student/dashboard';
+      const dashboardPath = result?.user?.role === 'tutor' ? '/tutor/dashboard' : '/student/profile';
       navigate(dashboardPath);
     } catch (err) {
       if (err.response?.data?.errors) {
