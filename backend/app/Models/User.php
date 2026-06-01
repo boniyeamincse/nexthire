@@ -93,4 +93,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(Booking::class, 'tutor_user_id');
     }
+
+    public function calendarEvents(): HasMany
+    {
+        return $this->hasMany(CalendarEvent::class, 'owner_user_id');
+    }
 }

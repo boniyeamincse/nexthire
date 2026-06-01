@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\BookingController;
+use App\Http\Controllers\Api\V1\CalendarController;
 use App\Http\Controllers\Api\V1\InterviewCategoryController;
 use App\Http\Controllers\Api\V1\InterviewSlotController;
 use App\Http\Controllers\Api\V1\TutorAvailabilityController;
@@ -87,6 +88,15 @@ Route::prefix('v1')->group(function (): void {
         Route::patch('/bookings/{id}/reschedule', [BookingController::class, 'reschedule']);
         Route::patch('/bookings/{id}/confirm', [BookingController::class, 'confirm']);
         Route::patch('/bookings/{id}/complete', [BookingController::class, 'complete']);
+
+        Route::get('/calendar/events', [CalendarController::class, 'indexEvents']);
+        Route::post('/calendar/events', [CalendarController::class, 'storeEvent']);
+        Route::get('/calendar/events/{id}', [CalendarController::class, 'showEvent']);
+        Route::put('/calendar/events/{id}', [CalendarController::class, 'updateEvent']);
+        Route::delete('/calendar/events/{id}', [CalendarController::class, 'deleteEvent']);
+        Route::get('/calendar/views/monthly', [CalendarController::class, 'monthlyView']);
+        Route::get('/calendar/views/weekly', [CalendarController::class, 'weeklyView']);
+        Route::get('/calendar/views/daily', [CalendarController::class, 'dailyView']);
 
         Route::prefix('admin')->group(function (): void {
             Route::get('/users', [UserManagementController::class, 'index']);
